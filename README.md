@@ -10,9 +10,9 @@ This allows one to run various analysis tools on an of the tables. In the near f
 
 Here is an example of showing a visualization of the log files of all novice players in the 2nd experiment
 ```
-runDemo(e2,'gameplay5')
+runDemo(e2,'gameplay4a',8)
 ```
 
 
-  ![Novice Game Players Log](/images/day2noviceusers.png "Day 2 Novice Users")
+  ![Day 2 user 8 log](/images/day2user8.png "Day 2 User8 log")
   
