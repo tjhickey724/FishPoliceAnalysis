@@ -7,7 +7,7 @@ function [ ] = gandsfigs(e, cmd )
         case 'fig7x7'
             for i=[1:43]
                 subplot(7,7,i);
-                runDemo(e,'gameplay4',i)
+                runDemo(e,'gameplay4a1',i)
             end
         case 'e1plot'
             for i=[1:15]

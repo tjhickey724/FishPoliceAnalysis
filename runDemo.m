@@ -597,11 +597,11 @@ end
             %rt0-rt00
             %rt1-rt00
             %rtmax
-            mark='+';
-            scatter((rowTime(filter&mode==1)-rt0)/60000,levelTime(filter&mode==1)/2000,rad,'b',mark);%'filled');
+            mark='o';
+            scatter((rowTime(filter&mode==1)-rt0)/60000,levelTime(filter&mode==1)/2000,rad,'b',mark,'filled');
             hold on;
-            scatter((rowTime(filter&mode==2)-rt0)/60000,levelTime(filter&mode==2)/2000,rad,'g',mark); %'filled');
-            hold on ; scatter((rowTime(userId==uid&correct==0)-rt0)/60000,levelTime(userId==uid&correct==0)/2000,rad,'r',mark); %'filled');
+            scatter((rowTime(filter&mode==2)-rt0)/60000,levelTime(filter&mode==2)/2000,rad,'g',mark,'filled');
+            hold on ; scatter((rowTime(userId==uid&correct==0)-rt0)/60000,levelTime(userId==uid&correct==0)/2000,rad,'r',mark,'filled');
             grid on ; grid minor;
             set(gca,'YTick',0:1:11); 
             set(gca,'XTick',0:5:50); %rtmax/60000);
@@ -611,6 +611,33 @@ end
             xlabel('Minutes');
             ylabel('Level + (RT/2)');
             legend('visual','auditory','errors');
+            hold off;
+            
+         case 'gameplay4a1'
+            uid = varargin{3};
+            rad=10;
+            filter = userId==uid&correct==1;
+            rt00 = min(rowTime);
+            rt0 = min(rowTime(userId==uid));
+            rt1 = max(rowTime(userId==uid));
+            rtmax = rt1-rt0;
+            %rt0-rt00
+            %rt1-rt00
+            %rtmax
+            mark='o';
+            scatter((rowTime(filter&mode==1)-rt0)/60000,levelTime(filter&mode==1)/2000,rad,'b',mark,'filled');
+            hold on;
+            scatter((rowTime(filter&mode==2)-rt0)/60000,levelTime(filter&mode==2)/2000,rad,'g',mark,'filled');
+            hold on ; scatter((rowTime(userId==uid&correct==0)-rt0)/60000,levelTime(userId==uid&correct==0)/2000,rad,'r',mark,'filled');
+            grid on ; grid minor;
+            %set(gca,'YTick',0:1:11); 
+            %set(gca,'XTick',0:5:50); %rtmax/60000);
+            %z = axis;
+            axis([0,50,0,11]);
+            title(uid);
+            %xlabel('Minutes');
+            %ylabel('Level + (RT/2)');
+            %legend('visual','auditory','errors');
             hold off;
         case 'gameplay4a'
             uid = varargin{3};
@@ -631,6 +658,64 @@ end
             axis([0,45,0,10]);
             grid minor;
             hold off;
+            
+            case 'gameplay4b'
+            uid = varargin{3}; % game id
+            gid = varargin{3}; % game id
+            rad=10;
+            filter = gameId==gid&userId==uid; 
+            rt00 = min(rowTime);
+            rt0 = min(rowTime(filter));
+            rt1 = max(rowTime(filter));
+            rtmax = rt1-rt0;
+            %rt0-rt00
+            %rt1-rt00
+            %rtmax
+            mark='+';
+            scatter((rowTime(filter&correct==1&mode==1)-rt0),reaction(filter&correct==1&mode==1),rad,'b',mark);%'filled');
+            hold on;
+            scatter((rowTime(filter&correct==1&mode==2)-rt0),reaction(filter&correct==1&mode==2),rad,'g',mark); %'filled');
+            hold on ; 
+            scatter((rowTime(filter&correct==0        )-rt0),reaction(filter&correct==0        ),rad,'r',mark); %'filled');
+            grid on ; grid minor;
+            %set(gca,'YTick',0:1:11); 
+            %set(gca,'XTick',0:5:50); %rtmax/60000);
+            %z = axis;
+            %axis([0,50,0,11]);
+            title(gid);
+            xlabel('Minutes');
+            ylabel('ReactionTime');
+            %legend('visual','auditory','errors');
+            hold off;
+            
+        case 'gameplay4c'
+            uid = varargin{3};
+            gid = varargin{4};
+            rad=200;
+            filter = gameId==gid&userId==uid&correct==1;
+            rt00 = min(rowTime);
+            rt0 = min(rowTime(gameId==gid&userId==uid));
+            rt1 = max(rowTime(gameId==gid&userId==uid));
+            rtmax = rt1-rt0;
+            %rt0-rt00
+            %rt1-rt00
+            %rtmax
+            mark='o';
+            scatter((rowTime(filter&mode==1)-rt0)/60000,levelTime(filter&mode==1)/2000,rad,'b',mark,'filled');
+            hold on;
+            scatter((rowTime(filter&mode==2)-rt0)/60000,levelTime(filter&mode==2)/2000,rad,'g',mark,'filled');
+            hold on ; scatter((rowTime(gameId==gid&userId==uid&correct==0)-rt0)/60000,levelTime(gameId==gid&userId==uid&correct==0)/2000,rad,'r',mark,'filled');
+            grid on ; grid minor;
+            set(gca,'YTick',0:0.1:1); 
+            set(gca,'XTick',0:0.1:1); %rtmax/60000);
+            z = axis;
+            axis([0,1,0,1]);
+            title(uid);
+            xlabel('Minutes');
+            ylabel('Level + (RT/2)');
+            legend('visual','auditory','errors');
+            hold off;
+            
         case 'gameplay5'
             [a,b]=histcounts(userId,1:1000);
             userids = 1:999;
@@ -642,21 +727,33 @@ end
             end
         case 'accuracy1'
             m = varargin{3}; % this is the mode 1=visual 2=auditory
-            acong = correct(eventType==1& mode==m & action==1 & congruent==1&level>0);
-            aincong = correct(eventType==1& mode==m & action==1 & congruent==2 & ~oddball&level>0);
-            aodd = correct(eventType==1& mode==m & action==1 & oddball&level>0);
-            rcong = reaction(eventType==1& mode==m & correct==1 & action==1 & congruent==1&level>0);
-            rincong = reaction(eventType==1& mode==m & correct==1 & action==1 & congruent==2 & ~oddball&level>0);
-            rodd = reaction(eventType==1& mode==m & correct==1 & action==1 & oddball&level>0);
+            filter = eventType==1 & mode==m & action==1 & level>0 ;
+            
+            noncong = congruent==2 &  ~oddball;
+            acong = correct(filter &  congruent==1);
+            aincong = correct(filter &  noncong);
+            aodd = correct(filter & oddball);
+            rcong = reaction(filter & correct==1 &  congruent==1);
+            rincong = reaction(filter & correct==1 & noncong);
+            rodd = reaction(filter& correct==1  & oddball);
 
             condition = {'congruent';'incongruent';'oddball'};
             ameans = [mean(acong);mean(aincong);mean(aodd)];
             aN = [length(acong);length(aincong);length(aodd)];
+            cint = 1.96*sqrt(ameans.*(1-ameans)./aN);
+            clo = ameans - cint;
+            chi = ameans + cint;
             
             rmeans = [mean(rcong);mean(rincong);mean(rodd)];
             rstdevs = [std(rcong);std(rincong);std(rodd)];
             rN = [length(rcong);length(rincong);length(rodd)];
-            T = table(condition,ameans,aN, rmeans,rstdevs,rN);
+            rint = 1.96*rstdevs./sqrt(rN);
+            rlo = rmeans - rint;
+            rhi = rmeans + rint;
+            
+            T = table(condition,ameans,aN,clo,chi);
+            disp(T)
+             T = table(condition, rmeans,rstdevs,rN,rlo,rhi);
             disp(T)
 
 
@@ -676,6 +773,21 @@ end
             N = [length(cong);length(incong);length(odd)];
             T = table(condition,means,stdevs,N);
             disp(T)
+            
+        case 'rt1a'
+            cong = reaction(action==1 & congruent==1 & level==4);
+            incong = reaction(action==1 & congruent==2 & level==4 & ~oddball);
+            odd = reaction(action==1 & level==4 & oddball);
+            disp({'congruent',mean(cong),std(cong),length(cong)});
+            disp({'incongruent',mean(incong),std(incong),length(incong)});
+            disp({'oddball',mean(odd),std(odd),length(odd)});
+            condition = {'congruent';'incongruent';'oddball'}
+            means = [mean(cong);mean(incong);mean(odd)];
+            stdevs = [std(cong);std(incong);std(odd)];
+            N = [length(cong);length(incong);length(odd)];
+            T = table(condition,means,stdevs,N);
+            disp(T)
+            
         case 'rt2'
             subplot(1,1,1);
             hold off;
