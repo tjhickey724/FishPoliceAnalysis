@@ -624,11 +624,12 @@ end
             %rt0-rt00
             %rt1-rt00
             %rtmax
-            mark='o';
-            scatter((rowTime(filter&mode==1)-rt0)/60000,levelTime(filter&mode==1)/2000,rad,'b',mark,'filled');
+            mark='+';
+            scatter((rowTime(filter&mode==1)-rt0)/60000,levelTime(filter&mode==1)/2000,rad,'b',mark);%,'filled');
             hold on;
-            scatter((rowTime(filter&mode==2)-rt0)/60000,levelTime(filter&mode==2)/2000,rad,'g',mark,'filled');
-            hold on ; scatter((rowTime(userId==uid&correct==0)-rt0)/60000,levelTime(userId==uid&correct==0)/2000,rad,'r',mark,'filled');
+            scatter((rowTime(filter&mode==2)-rt0)/60000,levelTime(filter&mode==2)/2000,rad,'g',mark); %,'filled');
+            hold on ; 
+            % scatter((rowTime(userId==uid&correct==0)-rt0)/60000,levelTime(userId==uid&correct==0)/2000,rad,'r',mark,'filled');
             grid on ; grid minor;
             %set(gca,'YTick',0:1:11); 
             %set(gca,'XTick',0:5:50); %rtmax/60000);
