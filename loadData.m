@@ -47,7 +47,7 @@ e3pa(:,4) = e3pa(:,4)+37;
 e = [e1a; e2a; e2pa; e3a; e3pa];
 
 % plot the distribution of users
-subplot(6,1,1); histogram(e1(:,4),-0.5:20);
+subplot(6,1,1); histogram(e1(:,4),-0.5:20)
 subplot(6,1,2); histogram(e2(:,4),-0.5:20);
 subplot(6,1,3); histogram(e2pro(:,4),-0.5:20);
 subplot(6,1,4); histogram(e3(:,4),-0.5:20);

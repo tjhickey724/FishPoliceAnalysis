@@ -597,11 +597,11 @@ end
             %rt0-rt00
             %rt1-rt00
             %rtmax
-            mark='o';
-            scatter((rowTime(filter&mode==1)-rt0)/60000,levelTime(filter&mode==1)/2000,rad,'b',mark,'filled');
+            mark='d';
+            scatter((rowTime(filter&mode==1)-rt0)/60000,levelTime(filter&mode==1)/2000,rad,'b',mark);%,'filled');
             hold on;
-            scatter((rowTime(filter&mode==2)-rt0)/60000,levelTime(filter&mode==2)/2000,rad,'g',mark,'filled');
-            hold on ; scatter((rowTime(userId==uid&correct==0)-rt0)/60000,levelTime(userId==uid&correct==0)/2000,rad,'r',mark,'filled');
+            scatter((rowTime(filter&mode==2)-rt0)/60000,levelTime(filter&mode==2)/2000,rad,'r',mark);%,'filled');
+            hold on ; scatter((rowTime(userId==uid&correct==0)-rt0)/60000,levelTime(userId==uid&correct==0)/2000,rad,'m','*');%,'filled');
             grid on ; grid minor;
             set(gca,'YTick',0:1:11); 
             set(gca,'XTick',0:5:50); %rtmax/60000);
@@ -627,7 +627,7 @@ end
             mark='+';
             scatter((rowTime(filter&mode==1)-rt0)/60000,levelTime(filter&mode==1)/2000,rad,'b',mark);%,'filled');
             hold on;
-            scatter((rowTime(filter&mode==2)-rt0)/60000,levelTime(filter&mode==2)/2000,rad,'g',mark); %,'filled');
+            scatter((rowTime(filter&mode==2)-rt0)/60000,levelTime(filter&mode==2)/2000,rad,'r',mark); %,'filled');
             hold on ; 
             % scatter((rowTime(userId==uid&correct==0)-rt0)/60000,levelTime(userId==uid&correct==0)/2000,rad,'r',mark,'filled');
             grid on ; grid minor;
@@ -640,6 +640,35 @@ end
             %ylabel('Level + (RT/2)');
             %legend('visual','auditory','errors');
             hold off;
+            
+         case 'gameplay4a2'
+            uid = varargin{3};
+            rad=10;
+            filter = userId==uid&correct==1;
+            rt00 = min(rowTime);
+            rt0 = min(rowTime(userId==uid));
+            rt1 = max(rowTime(userId==uid));
+            rtmax = rt1-rt0;
+            %rt0-rt00
+            %rt1-rt00
+            %rtmax
+            mark='+';
+            scatter((rowTime(filter&mode==1)-rt0)/60000,levelTime(filter&mode==1)/2000,rad,'b',mark);%,'filled');
+            hold on;
+            scatter((rowTime(filter&mode==2)-rt0)/60000,levelTime(filter&mode==2)/2000,rad,'r',mark); %,'filled');
+            hold on ; 
+            scatter((rowTime(userId==uid&correct==0)-rt0)/60000,levelTime(userId==uid&correct==0)/2000,rad,'g','*');%,'filled');
+            grid on ; grid minor;
+            %set(gca,'YTick',0:1:11); 
+            %set(gca,'XTick',0:5:50); %rtmax/60000);
+            %z = axis;
+            axis([0,50,0,11]);
+            title(uid);
+            %xlabel('Minutes');
+            %ylabel('Level + (RT/2)');
+            %legend('visual','auditory','errors');
+            hold off;
+            
         case 'gameplay4a'
             uid = varargin{3};
             rad=20;
@@ -648,8 +677,8 @@ end
             hold on;
             scatter(rowTimeN(filter&mode==1),levelTimeN(filter&mode==1),rad,'b','+');%'filled');
             hold on;
-            scatter(rowTimeN(filter&mode==2),levelTimeN(filter&mode==2),rad,'g','+'); %'filled');
-            hold on ; scatter(rowTimeN(userId==uid&correct==0),levelTimeN(userId==uid&correct==0),rad,'r','+'); %'filled');
+            scatter(rowTimeN(filter&mode==2),levelTimeN(filter&mode==2),rad,'r','+'); %'filled');
+            hold on ; scatter(rowTimeN(userId==uid&correct==0),levelTimeN(userId==uid&correct==0),rad,'g','+'); %'filled');
             grid on ;
             %set(gca,'YTick',0:2000:20000); 
             set(gca,'YTick',0:1:10);
@@ -660,7 +689,7 @@ end
             grid minor;
             hold off;
             
-            case 'gameplay4b'
+         case 'gameplay4b'
             uid = varargin{3}; % game id
             gid = varargin{3}; % game id
             rad=10;
@@ -692,7 +721,7 @@ end
         case 'gameplay4c'
             uid = varargin{3};
             gid = varargin{4};
-            rad=200;
+            rad=400;
             filter = gameId==gid&userId==uid&correct==1;
             rt00 = min(rowTime);
             rt0 = min(rowTime(gameId==gid&userId==uid));
@@ -701,11 +730,11 @@ end
             %rt0-rt00
             %rt1-rt00
             %rtmax
-            mark='o';
-            scatter((rowTime(filter&mode==1)-rt0)/60000,levelTime(filter&mode==1)/2000,rad,'b',mark,'filled');
+            mark='d';
+            scatter((rowTime(filter&mode==1)-rt0)/60000,levelTime(filter&mode==1)/2000,rad,'b',mark);%,'filled');
             hold on;
-            scatter((rowTime(filter&mode==2)-rt0)/60000,levelTime(filter&mode==2)/2000,rad,'g',mark,'filled');
-            hold on ; scatter((rowTime(gameId==gid&userId==uid&correct==0)-rt0)/60000,levelTime(gameId==gid&userId==uid&correct==0)/2000,rad,'r',mark,'filled');
+            scatter((rowTime(filter&mode==2)-rt0)/60000,levelTime(filter&mode==2)/2000,rad,'r',mark);%,'filled');
+            hold on ; scatter((rowTime(gameId==gid&userId==uid&correct==0)-rt0)/60000,levelTime(gameId==gid&userId==uid&correct==0)/2000,rad,'m','*');%,'filled');
             grid on ; grid minor;
             set(gca,'YTick',0:0.1:1); 
             set(gca,'XTick',0:0.1:1); %rtmax/60000);
